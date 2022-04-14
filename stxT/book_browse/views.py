@@ -1,9 +1,9 @@
-from django.shortcuts import render, redirect
-import requests
 import environ
+import requests
+from django.shortcuts import render, redirect
+
 from .forms import BookSearch
 from .models import *
-from django.db.models import Q
 
 env = environ.Env()
 env.read_env()
@@ -24,16 +24,14 @@ def books(request):
         return redirect('/')
 
     queries = {'q': search, 'inauthor': author, 'key': key}
-    print(queries)
     r = requests.get(
         'https://www.googleapis.com/books/v1/volumes', params=queries)
-    print(r)
     if r.status_code != 200:
         return render(request, 'book_browse/books.html', {'message': 'Sorry, there seems to be some problems'})
 
     data = r.json()
 
-    if not 'items' in data:
+    if 'items' not in data:
         return render(request, 'book_browse/books.html', {'message': 'No books match that search term.'})
 
     fetched_books = data['items']
@@ -48,23 +46,21 @@ def books(request):
             'info': book['volumeInfo']['infoLink'],
             'popularity': book['volumeInfo']['ratingsCount'] if 'ratingsCount' in book['volumeInfo'] else 0,
             'published': book['volumeInfo']['publishedDate'] if "publishedDate" in book['volumeInfo'] else "",
-            'pageCount': book['volumeInfo']['pageCount'] if 'pageCount' in book['volumeInfo'] else "No info about pages",
+            'pageCount': book['volumeInfo']['pageCount'] if 'pageCount' in book[
+                'volumeInfo'] else "No info about pages",
         }
         books.append(book_dict)
-    for i in books:
+    for book in books:
         bookers = Books(
-            title=i["title"],
-            author=i["authors"],
-            cover_link=i["image"],
-            publication_date=i["published"],
-            number_of_pages=i["pageCount"],
+            title=book["title"],
+            author=book["authors"],
+            cover_link=book["image"],
+            publication_date=book["published"],
+            number_of_pages=book["pageCount"],
         )
         bookers.save()
 
-    def sort_by_pop(e):
-        return e['popularity']
-
-    books.sort(reverse=True, key=sort_by_pop)
+    books.sort(reverse=True, key=lambda book: book['popularity'])
 
     return render(request, 'book_browse/books.html', {'books': books})
 
@@ -72,7 +68,3 @@ def books(request):
 def storage(request):
     posts = Books.objects.all()
     return render(request, 'book_browse/cart.html', {'posts': posts})
-
-
-def dbsearch(title):
-    Books.objects.filter(Q(title__icontains=title))

@@ -7,4 +7,4 @@ urlpatterns = [
     path("", views.index, name='index'),
     path('books/', views.books, name='books'),
     path('storage/', views.storage, name='storage')
-    ]
+]

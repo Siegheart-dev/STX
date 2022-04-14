@@ -1,43 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<head>
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="ie=edge" http-equiv="X-UA-Compatible"/>
     <title>Book Browse</title>
 
     {% load static %}
-    <link rel="stylesheet" href="{% static 'book_browse/style.css' %}" />
-  </head>
-     <header >
-        <a href="/" class="site-header">
+    <link href="{% static 'book_browse/style.css' %}" rel="stylesheet"/>
+</head>
+<header>
+    <a class="site-header" href="/">
         <svg
-          class="site-header__logo"
-          viewBox="0 0 32 32"
-          width="32"
-          height="32"
-          fill="none"
-          stroke="currentcolor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="4"
+                class="site-header__logo"
+                fill="none"
+                height="32"
+                stroke="currentcolor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="4"
+                viewBox="0 0 32 32"
+                width="32"
         >
-          <path
-            d="M16 7 C16 7 9 1 2 6 L2 28 C9 23 16 28 16 28 16 28 23 23 30 28 L30 6 C23 1 16 7 16 7 Z M16 7 L16 28"
-          ></path>
+            <path
+                    d="M16 7 C16 7 9 1 2 6 L2 28 C9 23 16 28 16 28 16 28 23 23 30 28 L30 6 C23 1 16 7 16 7 Z M16 7 L16 28"
+            ></path>
         </svg>
         <h1>Main page</h1>
-      </a>
-         <input>
-       <h1>_________________</h1>
-      </header>
-  <body>
-    <ul>
-      {% for p in posts  %}
-      <li>
-          <h2>
+    </a>
+    <input>
+    <h1>_________________</h1>
+</header>
+<body>
+<ul>
+    {% for p in posts %}
+    <li>
+        <h2>
             {{p.title}}
-          </h2>
+        </h2>
         <img src={{p.cover_link}}>
         <p>
             {{p.author}}
@@ -46,11 +46,11 @@
             {{p.publication_date}}
         </p>
         <p>
-           Pages: {{p.number_of_pages}}
+            Pages: {{p.number_of_pages}}
         </p>
         <hr/>
-      </li>
-      {% endfor %}
-    </ul>
-  </body>
+    </li>
+    {% endfor %}
+</ul>
+</body>
 </html>

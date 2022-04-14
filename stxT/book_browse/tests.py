@@ -1,5 +1,4 @@
 from django.test import SimpleTestCase
-from django.http import HttpRequest
 from django.urls import reverse
 
 
