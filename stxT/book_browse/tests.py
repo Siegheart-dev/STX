@@ -32,7 +32,7 @@ class IndexTests(SimpleTestCase):
     def test_index_does_not_contain_incorrect_html(self):
         response = self.client.get('/')
         self.assertNotContains(
-            response, 'Blah blah blah, incorrect text blah')
+            response, 'incorrect text')
 
 
 class BookListTests(SimpleTestCase):
@@ -67,4 +67,4 @@ class BookListTests(SimpleTestCase):
     def test_books_with_no_results_displays_sorry_message(self):
         response = self.client.get('/books/?search=fghdskfhksdfhsk')
         self.assertContains(
-            response, 'Sorry')
+            response, 'No such books')
