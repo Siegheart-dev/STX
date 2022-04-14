@@ -1,1 +1,1 @@
-web: gunicorn bookbrowse.wsgi
+web: python manage.py runserver
